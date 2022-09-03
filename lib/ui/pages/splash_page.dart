@@ -1,9 +1,33 @@
+import 'dart:async';
+
+import 'package:airplane_ticket/ui/pages/get_started_page.dart';
 import 'package:flutter/material.dart';
+import '../../main.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../shared/theme.dart';
 
-class SplashPage extends StatelessWidget {
+class SplashPage extends StatefulWidget {
   const SplashPage({super.key});
+
+  @override
+  State<SplashPage> createState() => _SplashPageState();
+}
+
+class _SplashPageState extends State<SplashPage> {
+  @override
+  void initState() {
+    super.initState();
+
+    Timer(const Duration(seconds: 5), () {
+      Navigator.of(context).pushReplacement(
+        MaterialPageRoute(
+          builder: (ctx) {
+            return const GetStartedPage();
+          },
+        ),
+      );
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -14,20 +38,22 @@ class SplashPage extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Container(
-                width: 100,
-                height: 100,
-                child: Image.asset('assets/icon/ic_logo.png')),
-            const SizedBox(
-              height: 50,
+              width: 100,
+              height: 100,
+              margin: const EdgeInsets.only(bottom: 50),
+              decoration: const BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage('assets/icon/ic_logo.png'),
+                ),
+              ),
             ),
             Text(
               'AIRPLANE',
-              style: GoogleFonts.poppins(
-                color: colorWhite,
-                fontSize: 30,
-                fontWeight: FontWeight.w600,
+              style: whiteText.copyWith(
+                fontSize: 32,
+                letterSpacing: 10,
               ),
-            )
+            ),
           ],
         ),
       ),
