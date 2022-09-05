@@ -1,14 +1,18 @@
 import 'package:airplane_ticket/shared/theme.dart';
+import 'package:airplane_ticket/ui/pages/sign_up_page.dart';
+import 'package:airplane_ticket/ui/widget/button_primary.dart';
 import 'package:flutter/material.dart';
 
 class GetStartedPage extends StatelessWidget {
   const GetStartedPage({super.key});
 
+  static const String routeName = '/get-started';
+
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
 
-    var width = size.width / 1.2;
+    var width = size.width / 1.5;
 
     return Scaffold(
       body: Stack(children: [
@@ -48,32 +52,14 @@ class GetStartedPage extends StatelessWidget {
                   ),
                   textAlign: TextAlign.center,
                 ),
-                InkWell(
-                  child: Container(
-                    width: width,
-                    margin: const EdgeInsets.only(
-                      top: 50,
-                    ),
-                    decoration: BoxDecoration(
-                      color: colorPrimary,
-                      borderRadius: BorderRadius.circular(17),
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 15,
-                        vertical: 14,
-                      ),
-                      child: Text(
-                        'Get Started',
-                        textAlign: TextAlign.center,
-                        style: whiteText.copyWith(
-                          fontSize: 18,
-                          fontWeight: fontWeightMedium,
-                        ),
-                      ),
-                    ),
-                  ),
-                  onTap: () {},
+                const SizedBox(
+                  height: 50,
+                ),
+                ButtonPrimary(
+                  width: width,
+                  title: 'Get Started',
+                  onTap: () => Navigator.of(context)
+                      .pushReplacementNamed(SignUpPage.routeName),
                 )
               ],
             ),
