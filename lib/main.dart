@@ -1,5 +1,9 @@
-import 'package:airplane_ticket/ui/pages/splash_page.dart';
+import 'package:airplane_ticket/ui/pages/bonus_page.dart';
+import 'package:airplane_ticket/ui/pages/sign_up_page.dart';
 import 'package:flutter/material.dart';
+
+import 'package:airplane_ticket/ui/pages/splash_page.dart';
+import 'package:airplane_ticket/ui/pages/get_started_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -13,7 +17,21 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Flutter airplane',
-      home: SplashPage(),
+      theme: ThemeData(
+        pageTransitionsTheme: const PageTransitionsTheme(
+          builders: {
+            TargetPlatform.android: ZoomPageTransitionsBuilder(),
+            TargetPlatform.iOS: CupertinoPageTransitionsBuilder(),
+          },
+        ),
+      ),
+      initialRoute: '/',
+      routes: {
+        '/': (context) => const SplashPage(),
+        GetStartedPage.routeName: (context) => const GetStartedPage(),
+        SignUpPage.routeName: (context) => SignUpPage(),
+        BonusPage.routeName: (context) => BonusPage(),
+      },
     );
   }
 }
