@@ -13,6 +13,7 @@ Color colorWhite = const Color(0xffFFFFFF);
 Color colorGreen = const Color(0xff0EC3AE);
 Color colorRed = const Color(0xffEB70A5);
 Color colorBackground = const Color(0xffFAFAFA);
+Color colorTransparent = Colors.transparent;
 
 TextStyle blackText = GoogleFonts.poppins(
   color: colorBlack,

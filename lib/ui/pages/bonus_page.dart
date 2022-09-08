@@ -1,4 +1,5 @@
 import 'package:airplane_ticket/shared/theme.dart';
+import 'package:airplane_ticket/ui/pages/main_page.dart';
 import 'package:airplane_ticket/ui/widget/button_primary.dart';
 import 'package:flutter/material.dart';
 
@@ -155,7 +156,13 @@ class BonusPage extends StatelessWidget {
                   height: 50,
                 ),
                 ButtonPrimary(
-                    title: 'Start Fly Now', width: width, onTap: () {})
+                  title: 'Start Fly Now',
+                  width: width,
+                  onTap: () {
+                    Navigator.of(context)
+                        .pushReplacementNamed(MainPage.routeName);
+                  },
+                ),
               ],
             ),
           ),
