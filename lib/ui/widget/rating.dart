@@ -3,8 +3,13 @@ import '../../shared/theme.dart';
 
 class Rating extends StatelessWidget {
   final double rating;
+  final TextStyle? textStyle;
 
-  const Rating({super.key, this.rating = 0.0});
+  const Rating({
+    super.key,
+    this.rating = 0.0,
+    this.textStyle,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -22,10 +27,14 @@ class Rating extends StatelessWidget {
         ),
         Text(
           rating.toString(),
-          style: blackText.copyWith(
-            fontSize: 14,
-            fontWeight: fontWeightMedium,
-          ),
+          style: textStyle != null
+              ? textStyle!.copyWith(
+                  fontWeight: fontWeightMedium,
+                )
+              : blackText.copyWith(
+                  fontSize: 14,
+                  fontWeight: fontWeightMedium,
+                ),
         )
       ],
     );

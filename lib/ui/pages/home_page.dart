@@ -1,4 +1,4 @@
-import 'package:airplane_ticket/ui/widget/destionation_card.dart';
+import 'package:airplane_ticket/ui/widget/destination_card.dart';
 import 'package:airplane_ticket/ui/widget/new_destination_card.dart';
 import 'package:airplane_ticket/ui/widget/rating.dart';
 import 'package:flutter/material.dart';
@@ -70,19 +70,19 @@ class HomePage extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            DesticationCard(
+            DestinationCard(
               title: 'Lake Ciliwung',
               location: 'Tangerang',
               rating: 5.0,
               imgUrl: 'assets/images/img_lake_ciliwung.png',
             ),
-            DesticationCard(
+            DestinationCard(
               title: 'White Houses',
               location: 'Spain',
               imgUrl: 'assets/images/img_white_houses.png',
               rating: 4.7,
             ),
-            DesticationCard(
+            DestinationCard(
               title: 'Hill Heyo',
               location: 'Monaco',
               imgUrl: 'assets/images/img_hill_heyo.png',
