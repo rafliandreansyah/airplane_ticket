@@ -1,6 +1,7 @@
 import 'package:airplane_ticket/shared/theme.dart';
 import 'package:flutter/material.dart';
 import '../widget/bottom_nav_item.dart';
+import '../pages/home_page.dart';
 
 class MainPage extends StatelessWidget {
   const MainPage({super.key});
@@ -42,10 +43,13 @@ class MainPage extends StatelessWidget {
 
     return Scaffold(
       backgroundColor: colorBackground,
-      body: Stack(
-        children: [
-          customBottomNavigation(),
-        ],
+      body: SafeArea(
+        child: Stack(
+          children: [
+            HomePage(),
+            customBottomNavigation(),
+          ],
+        ),
       ),
     );
   }
