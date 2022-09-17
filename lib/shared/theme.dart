@@ -14,6 +14,11 @@ Color colorGreen = const Color(0xff0EC3AE);
 Color colorRed = const Color(0xffEB70A5);
 Color colorBackground = const Color(0xffFAFAFA);
 Color colorTransparent = Colors.transparent;
+Color colorUnavailable = const Color(0xffEBECF1);
+
+TextStyle purpleText = GoogleFonts.poppins(
+  color: colorPrimary,
+);
 
 TextStyle blackText = GoogleFonts.poppins(
   color: colorBlack,

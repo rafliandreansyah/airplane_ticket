@@ -1,4 +1,5 @@
 import 'package:airplane_ticket/shared/theme.dart';
+import 'package:airplane_ticket/ui/pages/choose_seat.dart';
 import 'package:airplane_ticket/ui/widget/button_primary.dart';
 import 'package:airplane_ticket/ui/widget/interest_item.dart';
 import 'package:airplane_ticket/ui/widget/photo_item.dart';
@@ -207,7 +208,9 @@ class DetailPage extends StatelessWidget {
                     child: ButtonPrimary(
                       title: 'Book Now',
                       width: double.infinity,
-                      onTap: () {},
+                      onTap: () {
+                        Navigator.of(context).pushNamed(ChooseSeat.routeName);
+                      },
                     ),
                   )
                 ],
