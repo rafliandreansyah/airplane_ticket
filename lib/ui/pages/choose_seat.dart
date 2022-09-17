@@ -1,4 +1,5 @@
 import 'package:airplane_ticket/shared/theme.dart';
+import 'package:airplane_ticket/ui/pages/check_out_page.dart';
 import 'package:airplane_ticket/ui/widget/button_primary.dart';
 import 'package:airplane_ticket/ui/widget/row_seat.dart';
 import 'package:flutter/material.dart';
@@ -248,9 +249,11 @@ class ChooseSeat extends StatelessWidget {
             seatStatus(),
             selectedSeat(),
             ButtonPrimary(
-                title: 'Continue To Checkout',
-                width: double.infinity,
-                onTap: () {}),
+              title: 'Continue To Checkout',
+              width: double.infinity,
+              onTap: () =>
+                  Navigator.of(context).pushNamed(CheckOutPage.routeName),
+            ),
           ],
         ),
       ),
