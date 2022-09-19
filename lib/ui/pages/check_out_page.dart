@@ -1,4 +1,5 @@
 import 'package:airplane_ticket/shared/theme.dart';
+import 'package:airplane_ticket/ui/pages/success.page.dart';
 import 'package:airplane_ticket/ui/widget/booking_detail_item.dart';
 import 'package:airplane_ticket/ui/widget/button_primary.dart';
 import 'package:airplane_ticket/ui/widget/photo_item.dart';
@@ -285,6 +286,21 @@ class CheckOutPage extends StatelessWidget {
       );
     }
 
+    Widget btnTac() {
+      return GestureDetector(
+        onTap: () {},
+        child: Text(
+          'Terms and Conditions',
+          style: greyText.copyWith(
+            fontSize: 16,
+            fontWeight: fontWeightLight,
+            decoration: TextDecoration.underline,
+          ),
+          textAlign: TextAlign.center,
+        ),
+      );
+    }
+
     return Scaffold(
       backgroundColor: colorBackground,
       body: SafeArea(
@@ -302,8 +318,14 @@ class CheckOutPage extends StatelessWidget {
             ButtonPrimary(
               title: 'Pay Now',
               width: double.infinity,
-              onTap: () {},
+              onTap: () => Navigator.of(context).pushNamed(
+                SuccessPage.routeName,
+              ),
             ),
+            const SizedBox(
+              height: 30,
+            ),
+            btnTac(),
           ],
         ),
       ),

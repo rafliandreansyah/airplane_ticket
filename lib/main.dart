@@ -5,6 +5,7 @@ import 'package:airplane_ticket/ui/pages/detail_page.dart';
 import 'package:airplane_ticket/ui/pages/home_page.dart';
 import 'package:airplane_ticket/ui/pages/main_page.dart';
 import 'package:airplane_ticket/ui/pages/sign_up_page.dart';
+import 'package:airplane_ticket/ui/pages/success.page.dart';
 import 'package:flutter/material.dart';
 
 import 'package:airplane_ticket/ui/pages/splash_page.dart';
@@ -41,6 +42,7 @@ class MyApp extends StatelessWidget {
         DetailPage.routeName: (context) => const DetailPage(),
         ChooseSeat.routeName: (context) => const ChooseSeat(),
         CheckOutPage.routeName: (context) => const CheckOutPage(),
+        SuccessPage.routeName: (context) => const SuccessPage(),
       },
     );
   }
