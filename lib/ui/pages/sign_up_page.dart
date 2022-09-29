@@ -1,8 +1,10 @@
+import 'package:airplane_ticket/cubit/auth_cubit.dart';
 import 'package:airplane_ticket/ui/pages/bonus_page.dart';
 import 'package:airplane_ticket/ui/widget/button_primary.dart';
 import 'package:airplane_ticket/ui/widget/text_field_default.dart';
 import 'package:flutter/material.dart';
 import 'package:airplane_ticket/shared/theme.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class SignUpPage extends StatefulWidget {
   SignUpPage({super.key});
@@ -28,6 +30,44 @@ class _SignUpPageState extends State<SignUpPage> {
 
   @override
   Widget build(BuildContext context) {
+    Widget submitButton() {
+      return BlocConsumer<AuthCubit, AuthState>(
+        listener: (ctx, state) {
+          if (state is AuthSuccess) {
+            Navigator.of(context).pushNamedAndRemoveUntil(
+              BonusPage.routeName,
+              (route) => false,
+            );
+          } else if (state is AuthError) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                backgroundColor: colorRed,
+                content: Text('Error: ${state.errorMessage}'),
+              ),
+            );
+          }
+        },
+        builder: (ctx, state) {
+          if (state is AuthLoading) {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+          return ButtonPrimary(
+              title: 'Get Started',
+              width: double.infinity,
+              onTap: () {
+                ctx.read<AuthCubit>().signUp(
+                      email: _emailController.text,
+                      password: _passwordController.text,
+                      name: _fullNameController.text,
+                      hobby: _hobbyController.text,
+                    );
+              });
+        },
+      );
+    }
+
     return Scaffold(
       backgroundColor: colorBackground,
       body: SafeArea(
@@ -100,12 +140,7 @@ class _SignUpPageState extends State<SignUpPage> {
                           hintText: 'Enter your hobby...',
                         ),
                         const SizedBox(height: 30),
-                        ButtonPrimary(
-                          title: 'Get Started',
-                          width: double.infinity,
-                          onTap: () => Navigator.of(context)
-                              .pushReplacementNamed(BonusPage.routeName),
-                        ),
+                        submitButton(),
                       ],
                     ),
                   ),
