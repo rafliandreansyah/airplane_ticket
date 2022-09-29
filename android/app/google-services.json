@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "263869260166",
+    "project_id": "airplane-flutter-27a22",
+    "storage_bucket": "airplane-flutter-27a22.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:263869260166:android:115c356e2fe558b56b0c07",
+        "android_client_info": {
+          "package_name": "com.rafli.airplane_ticket"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "263869260166-lhcf8880kpp1leju1od4nten8cgen9qj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCMkYWFsGyeqmdwoKFnOCUR4BSDVs_qvJI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "263869260166-lhcf8880kpp1leju1od4nten8cgen9qj.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "263869260166-6ircp5luq5g1ih0c5oor7llnit42f9ls.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.rafli.airplaneTicket"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

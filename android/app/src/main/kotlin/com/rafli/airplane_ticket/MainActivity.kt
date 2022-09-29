@@ -1,4 +1,4 @@
-package com.example.airplane_ticket
+package com.rafli.airplane_ticket
 
 import io.flutter.embedding.android.FlutterActivity
 
