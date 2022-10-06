@@ -1,7 +1,9 @@
+import 'package:airplane_ticket/cubit/auth_cubit.dart';
 import 'package:airplane_ticket/ui/widget/destination_card.dart';
 import 'package:airplane_ticket/ui/widget/new_destination_card.dart';
 import 'package:airplane_ticket/ui/widget/rating.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../shared/theme.dart';
 
 class HomePage extends StatelessWidget {
@@ -12,53 +14,61 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Widget headerContent() {
-      return Padding(
-        padding: EdgeInsets.symmetric(
-          horizontal: defaultMargin,
-          vertical: 30,
-        ),
-        child: Row(
-          children: [
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+      return BlocBuilder<AuthCubit, AuthState>(
+        builder: (context, state) {
+          if (state is AuthSuccess) {
+            return Padding(
+              padding: EdgeInsets.symmetric(
+                horizontal: defaultMargin,
+                vertical: 30,
+              ),
+              child: Row(
                 children: [
-                  Text(
-                    'Howdy,\nKezia Anne',
-                    style: blackText.copyWith(
-                      fontSize: 24,
-                      fontWeight: fontWeightSemiBold,
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Howdy,\n${state.user.name}',
+                          style: blackText.copyWith(
+                            fontSize: 24,
+                            fontWeight: fontWeightSemiBold,
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 6,
+                        ),
+                        Text(
+                          'Where to fly today?',
+                          style: greyText.copyWith(
+                            fontSize: 16,
+                            fontWeight: fontWeightLight,
+                          ),
+                        ),
+                      ],
                     ),
                   ),
-                  const SizedBox(
-                    height: 6,
-                  ),
-                  Text(
-                    'Where to fly today?',
-                    style: greyText.copyWith(
-                      fontSize: 16,
-                      fontWeight: fontWeightLight,
+                  Container(
+                    width: 60,
+                    height: 60,
+                    padding: const EdgeInsets.all(5),
+                    decoration: const BoxDecoration(
+                      shape: BoxShape.circle,
+                      image: DecorationImage(
+                        image: AssetImage(
+                          'assets/images/img_profile.png',
+                        ),
+                        fit: BoxFit.contain,
+                      ),
                     ),
                   ),
                 ],
               ),
-            ),
-            Container(
-              width: 60,
-              height: 60,
-              padding: const EdgeInsets.all(5),
-              decoration: const BoxDecoration(
-                shape: BoxShape.circle,
-                image: DecorationImage(
-                  image: AssetImage(
-                    'assets/images/img_profile.png',
-                  ),
-                  fit: BoxFit.contain,
-                ),
-              ),
-            ),
-          ],
-        ),
+            );
+          } else {
+            return SizedBox();
+          }
+        },
       );
     }
 

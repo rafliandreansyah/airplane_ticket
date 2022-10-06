@@ -17,4 +17,19 @@ class UserService {
       throw e;
     }
   }
+
+  Future<UserModel?> getUserById(String id) async {
+    try {
+      var userData = await _db.collection('users').doc(id).get();
+      return UserModel(
+        id: id,
+        name: userData['name'],
+        email: userData['email'],
+        hobby: userData['hobby'],
+        balance: userData['amount'],
+      );
+    } catch (e) {
+      throw e;
+    }
+  }
 }
