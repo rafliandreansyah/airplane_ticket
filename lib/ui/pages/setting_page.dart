@@ -1,8 +1,10 @@
 import 'package:airplane_ticket/cubit/auth_cubit.dart';
-import 'package:airplane_ticket/ui/pages/sign_up_page.dart';
+import 'package:airplane_ticket/cubit/page_cubit.dart';
 import 'package:airplane_ticket/ui/widget/button_primary.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
+import 'sign_in_page.dart';
 
 class SettingPage extends StatelessWidget {
   const SettingPage({super.key});
@@ -20,8 +22,9 @@ class SettingPage extends StatelessWidget {
                 ),
               );
             } else if (state is AuthInitial) {
+              context.read<PageCubit>().changePage(0);
               Navigator.of(context).pushNamedAndRemoveUntil(
-                  SignUpPage.routeName, (route) => false);
+                  SignInPage.routeName, (route) => false);
             }
           },
           builder: (ctx, state) {

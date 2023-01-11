@@ -1,5 +1,5 @@
 import 'package:airplane_ticket/shared/theme.dart';
-import 'package:airplane_ticket/ui/pages/sign_up_page.dart';
+import 'package:airplane_ticket/ui/pages/sign_in_page.dart';
 import 'package:airplane_ticket/ui/widget/button_primary.dart';
 import 'package:flutter/material.dart';
 
@@ -59,7 +59,7 @@ class GetStartedPage extends StatelessWidget {
                   width: width,
                   title: 'Get Started',
                   onTap: () => Navigator.of(context)
-                      .pushReplacementNamed(SignUpPage.routeName),
+                      .pushReplacementNamed(SignInPage.routeName),
                 )
               ],
             ),

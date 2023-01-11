@@ -1,64 +1,60 @@
 import 'package:airplane_ticket/cubit/auth_cubit.dart';
-import 'package:airplane_ticket/ui/pages/bonus_page.dart';
-import 'package:airplane_ticket/ui/pages/sign_in_page.dart';
-import 'package:airplane_ticket/ui/widget/button_primary.dart';
-import 'package:airplane_ticket/ui/widget/text_field_default.dart';
-import 'package:flutter/material.dart';
 import 'package:airplane_ticket/shared/theme.dart';
+import 'package:airplane_ticket/ui/pages/main_page.dart';
+import 'package:airplane_ticket/ui/pages/sign_up_page.dart';
+import 'package:airplane_ticket/ui/widget/button_primary.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class SignUpPage extends StatefulWidget {
-  SignUpPage({super.key});
+import '../widget/text_field_default.dart';
 
-  static const String routeName = '/sign-up';
+class SignInPage extends StatefulWidget {
+  const SignInPage({super.key});
+
+  static const String routeName = '/sign-in';
 
   @override
-  State<SignUpPage> createState() => _SignUpPageState();
+  State<SignInPage> createState() => _SignInPageState();
 }
 
-class _SignUpPageState extends State<SignUpPage> {
-  var _passwordVisible = false;
+class _SignInPageState extends State<SignInPage> {
+  bool _passwordVisible = false;
 
-  final TextEditingController _fullNameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-  final TextEditingController _hobbyController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     Widget submitButton() {
       return BlocConsumer<AuthCubit, AuthState>(
-        listener: (ctx, state) {
+        listener: (context, state) {
           if (state is AuthSuccess) {
             Navigator.of(context).pushNamedAndRemoveUntil(
-              BonusPage.routeName,
+              MainPage.routeName,
               (route) => false,
             );
           } else if (state is AuthError) {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
                 backgroundColor: colorRed,
-                content: Text('Error: ${state.errorMessage}'),
+                content: Text(state.errorMessage),
               ),
             );
           }
         },
-        builder: (ctx, state) {
+        builder: (context, state) {
           if (state is AuthLoading) {
             return const Center(
               child: CircularProgressIndicator(),
             );
           }
           return ButtonPrimary(
-              title: 'Get Started',
+              title: 'Sign In',
               width: double.infinity,
               onTap: () {
-                ctx.read<AuthCubit>().signUp(
-                      email: _emailController.text,
-                      password: _passwordController.text,
-                      name: _fullNameController.text,
-                      hobby: _hobbyController.text,
-                    );
+                context.read<AuthCubit>().signIn(
+                    _emailController.text.toString(),
+                    _passwordController.text.toString());
               });
         },
       );
@@ -96,14 +92,6 @@ class _SignUpPageState extends State<SignUpPage> {
                     child: Column(
                       children: [
                         TextFieldDefault(
-                          controller: _fullNameController,
-                          title: 'Full Name',
-                          hintText: 'Enter your full name...',
-                        ),
-                        const SizedBox(
-                          height: 20,
-                        ),
-                        TextFieldDefault(
                           controller: _emailController,
                           title: 'Email',
                           hintText: 'Enter your email...',
@@ -127,14 +115,6 @@ class _SignUpPageState extends State<SignUpPage> {
                                 : Icons.visibility_off),
                           ),
                         ),
-                        const SizedBox(
-                          height: 20,
-                        ),
-                        TextFieldDefault(
-                          controller: _hobbyController,
-                          title: 'Hobby',
-                          hintText: 'Enter your hobby...',
-                        ),
                         const SizedBox(height: 30),
                         submitButton(),
                       ],
@@ -144,10 +124,10 @@ class _SignUpPageState extends State<SignUpPage> {
                 Center(
                   child: InkWell(
                     onTap: () {
-                      Navigator.of(context).pop();
+                      Navigator.of(context).pushNamed(SignUpPage.routeName);
                     },
                     child: Text(
-                      'Already have a account? Sign In',
+                      'Don\'t have an account? Sign Up',
                       style: greyText.copyWith(
                         fontSize: 16,
                         fontWeight: fontWeightLight,

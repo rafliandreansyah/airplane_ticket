@@ -38,4 +38,18 @@ class AuthService {
       throw e;
     }
   }
+
+  Future<UserModel> signIn(String email, String password) async {
+    try {
+      final credentials = await _auth.signInWithEmailAndPassword(
+          email: email, password: password);
+      UserModel? user = await UserService().getUserById(credentials.user!.uid);
+      if (user == null) {
+        throw Exception('User not found');
+      }
+      return user;
+    } catch (e) {
+      rethrow;
+    }
+  }
 }
