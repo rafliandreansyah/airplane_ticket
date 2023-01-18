@@ -38,7 +38,7 @@ class DestinationCard extends StatelessWidget {
                 borderRadius: BorderRadius.circular(defaultRadius),
                 image: DecorationImage(
                   fit: BoxFit.cover,
-                  image: AssetImage(
+                  image: NetworkImage(
                     imgUrl,
                   ),
                 ),

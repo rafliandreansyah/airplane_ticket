@@ -1,4 +1,5 @@
 import 'package:airplane_ticket/cubit/auth_cubit.dart';
+import 'package:airplane_ticket/service/destination_service.dart';
 import 'package:airplane_ticket/shared/theme.dart';
 import 'package:airplane_ticket/ui/pages/main_page.dart';
 import 'package:airplane_ticket/ui/pages/sign_up_page.dart';

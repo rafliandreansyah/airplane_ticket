@@ -1,15 +1,28 @@
 import 'package:airplane_ticket/cubit/auth_cubit.dart';
+import 'package:airplane_ticket/cubit/destination_cubit.dart';
 import 'package:airplane_ticket/ui/widget/destination_card.dart';
 import 'package:airplane_ticket/ui/widget/new_destination_card.dart';
 import 'package:airplane_ticket/ui/widget/rating.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../model/destination_model.dart';
 import '../../shared/theme.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   const HomePage({super.key});
 
   static const String routeName = '/home-page';
+
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  @override
+  void initState() {
+    context.read<DestinationCubit>().getDestination();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -72,37 +85,25 @@ class HomePage extends StatelessWidget {
       );
     }
 
-    Widget popularDestincation() {
-      return SingleChildScrollView(
-        physics: BouncingScrollPhysics(),
-        padding: EdgeInsets.symmetric(horizontal: defaultMargin),
-        scrollDirection: Axis.horizontal,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            DestinationCard(
-              title: 'Lake Ciliwung',
-              location: 'Tangerang',
-              rating: 5.0,
-              imgUrl: 'assets/images/img_lake_ciliwung.png',
-            ),
-            DestinationCard(
-              title: 'White Houses',
-              location: 'Spain',
-              imgUrl: 'assets/images/img_white_houses.png',
-              rating: 4.7,
-            ),
-            DestinationCard(
-              title: 'Hill Heyo',
-              location: 'Monaco',
-              imgUrl: 'assets/images/img_hill_heyo.png',
-            ),
-          ],
+    Widget popularDestination(List<Destination> destinations) {
+      return SizedBox(
+        height: 330,
+        child: ListView.builder(
+          physics: const BouncingScrollPhysics(),
+          shrinkWrap: true,
+          itemCount: destinations.length,
+          scrollDirection: Axis.horizontal,
+          itemBuilder: (ctx, index) => DestinationCard(
+            title: destinations[index].name!,
+            location: destinations[index].address!,
+            imgUrl: destinations[index].imageUrl!,
+            rating: destinations[index].rating!,
+          ),
         ),
       );
     }
 
-    Widget newThisYear() {
+    Widget newThisYear(List<Destination> destinations) {
       return Padding(
         padding: EdgeInsets.only(
           left: defaultMargin,
@@ -112,51 +113,37 @@ class HomePage extends StatelessWidget {
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              'New This Year',
-              style: blackText.copyWith(
-                fontSize: 18,
-                fontWeight: fontWeightSemiBold,
-              ),
-            ),
-            const NewDestinationCard(
-              imgUrl: 'assets/images/img_danau_beratan.png',
-              title: 'Danau Beratan',
-              location: 'Singaraja',
-              rating: 4.7,
-            ),
-            const NewDestinationCard(
-              imgUrl: 'assets/images/img_danau_beratan.png',
-              title: 'Danau Beratan',
-              location: 'Singaraja',
-              rating: 4.7,
-            ),
-            const NewDestinationCard(
-              imgUrl: 'assets/images/img_danau_beratan.png',
-              title: 'Danau Beratan',
-              location: 'Singaraja',
-              rating: 4.7,
-            ),
-            const NewDestinationCard(
-              imgUrl: 'assets/images/img_danau_beratan.png',
-              title: 'Danau Beratan',
-              location: 'Singaraja',
-              rating: 4.7,
-            ),
-          ],
+          children: destinations
+              .map((e) => NewDestinationCard(destination: e))
+              .toList(),
         ),
       );
     }
 
     return Scaffold(
       backgroundColor: colorBackground,
-      body: ListView(
-        children: [
-          headerContent(),
-          popularDestincation(),
-          newThisYear(),
-        ],
+      body: BlocConsumer<DestinationCubit, DestinationState>(
+        listener: (context, state) {
+          if (state is DestinationError) {
+            ScaffoldMessenger.of(context)
+                .showSnackBar(SnackBar(content: Text(state.error)));
+            print(state.error);
+          }
+        },
+        builder: (context, state) {
+          if (state is DestinationSuccess) {
+            return SingleChildScrollView(
+              child: Column(
+                children: [
+                  headerContent(),
+                  popularDestination(state.destination),
+                  newThisYear(state.destination),
+                ],
+              ),
+            );
+          }
+          return Container(child: Center(child: CircularProgressIndicator()));
+        },
       ),
     );
   }

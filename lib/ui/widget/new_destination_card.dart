@@ -1,20 +1,12 @@
+import 'package:airplane_ticket/model/destination_model.dart';
 import 'package:airplane_ticket/ui/pages/detail_page.dart';
 import 'package:flutter/material.dart';
 import '../widget/rating.dart';
 import '../../shared/theme.dart';
 
 class NewDestinationCard extends StatelessWidget {
-  final String imgUrl;
-  final String title;
-  final String location;
-  final double rating;
-  const NewDestinationCard({
-    super.key,
-    required this.imgUrl,
-    required this.title,
-    required this.location,
-    this.rating = 0.0,
-  });
+  final Destination destination;
+  const NewDestinationCard({super.key, required this.destination});
 
   @override
   Widget build(BuildContext context) {
@@ -43,9 +35,9 @@ class NewDestinationCard extends StatelessWidget {
               height: 70,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(defaultRadius),
-                image: const DecorationImage(
-                  image: AssetImage(
-                    'assets/images/img_danau_beratan.png',
+                image: DecorationImage(
+                  image: NetworkImage(
+                    destination.imageUrl ?? '',
                   ),
                   fit: BoxFit.cover,
                 ),
@@ -59,14 +51,14 @@ class NewDestinationCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'Danau Beratan',
+                    destination.name ?? '',
                     style: blackText.copyWith(
                       fontSize: 18,
                       fontWeight: fontWeightMedium,
                     ),
                   ),
                   Text(
-                    'Singaraja',
+                    destination.address ?? '',
                     style: greyText.copyWith(
                       fontWeight: fontWeightLight,
                     ),
@@ -75,7 +67,7 @@ class NewDestinationCard extends StatelessWidget {
               ),
             ),
             Rating(
-              rating: rating,
+              rating: destination.rating ?? 0.0,
             ),
           ],
         ),
