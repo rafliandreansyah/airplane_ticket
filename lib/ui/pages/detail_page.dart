@@ -1,3 +1,4 @@
+import 'package:airplane_ticket/model/destination_model.dart';
 import 'package:airplane_ticket/shared/theme.dart';
 import 'package:airplane_ticket/ui/pages/choose_seat.dart';
 import 'package:airplane_ticket/ui/widget/button_primary.dart';
@@ -13,14 +14,16 @@ class DetailPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final args = ModalRoute.of(context)!.settings.arguments as Destination;
+
     Widget imageBackground() {
       return Container(
         width: double.infinity,
         height: 450,
         decoration: BoxDecoration(
           image: DecorationImage(
-            image: AssetImage(
-              'assets/images/img_lake_ciliwung.png',
+            image: NetworkImage(
+              args.imageUrl ?? '',
             ),
             fit: BoxFit.cover,
           ),
@@ -67,14 +70,14 @@ class DetailPage extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'Lake Ciliwung',
+                          args.name ?? '',
                           style: whiteText.copyWith(
                             fontSize: 24,
                             fontWeight: fontWeightSemiBold,
                           ),
                         ),
                         Text(
-                          'Tangerang',
+                          args.address ?? '',
                           style: whiteText.copyWith(
                             fontSize: 16,
                             fontWeight: fontWeightLight,
@@ -84,6 +87,7 @@ class DetailPage extends StatelessWidget {
                     ),
                   ),
                   Rating(
+                    rating: args.rating ?? 0.0,
                     textStyle: whiteText,
                   ),
                 ],

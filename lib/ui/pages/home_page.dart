@@ -94,10 +94,7 @@ class _HomePageState extends State<HomePage> {
           itemCount: destinations.length,
           scrollDirection: Axis.horizontal,
           itemBuilder: (ctx, index) => DestinationCard(
-            title: destinations[index].name!,
-            location: destinations[index].address!,
-            imgUrl: destinations[index].imageUrl!,
-            rating: destinations[index].rating!,
+            destination: destinations[index],
           ),
         ),
       );
