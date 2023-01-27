@@ -6,15 +6,18 @@ class Destination extends Equatable {
   final String? address;
   final String? imageUrl;
   final double? rating;
+  final String? description;
   final int? price;
 
-  Destination(
-      {required this.id,
-      this.name,
-      this.address,
-      this.imageUrl,
-      this.rating,
-      this.price});
+  Destination({
+    required this.id,
+    this.name,
+    this.address,
+    this.imageUrl,
+    this.rating,
+    this.price,
+    this.description,
+  });
 
   factory Destination.formJson(String id, Map<String, dynamic> json) {
     return Destination(
@@ -23,6 +26,8 @@ class Destination extends Equatable {
       address: json['address'],
       imageUrl: json['imageUrl'],
       rating: double.parse(json['rating']),
+      price: int.parse(json['price']),
+      description: json['description'],
     );
   }
 

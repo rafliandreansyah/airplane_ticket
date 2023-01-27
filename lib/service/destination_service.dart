@@ -21,7 +21,9 @@ class DestinationService {
               'name': doc['name'],
               'address': doc['address'],
               'imageUrl': doc['imageUrl'],
-              'rating': doc['rating'].toString()
+              'rating': doc['rating'].toString(),
+              'description': doc['description'],
+              'price': doc['price'].toString(),
             },
           );
 

@@ -5,6 +5,7 @@ import 'package:airplane_ticket/ui/widget/button_primary.dart';
 import 'package:airplane_ticket/ui/widget/interest_item.dart';
 import 'package:airplane_ticket/ui/widget/photo_item.dart';
 import 'package:airplane_ticket/ui/widget/rating.dart';
+import 'package:airplane_ticket/utils/number_utils.dart';
 import 'package:flutter/material.dart';
 
 class DetailPage extends StatelessWidget {
@@ -121,7 +122,7 @@ class DetailPage extends StatelessWidget {
                       height: 6,
                     ),
                     Text(
-                      'Berada di jalur jalan provinsi yang menghubungkan Denpasar Singaraja serta letaknya yang dekat dengan Kebun Raya Eka Karya menjadikan tempat Bali.',
+                      args.description ?? '-',
                       style: blackText.copyWith(
                         fontWeight: fontWeightRegular,
                         height: 1.8,
@@ -190,7 +191,7 @@ class DetailPage extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'IDR 2.500.000',
+                          NumberUtils.currencyFormat(args.price ?? 0),
                           style: blackText.copyWith(
                             fontSize: 18,
                             fontWeight: fontWeightMedium,
@@ -213,7 +214,8 @@ class DetailPage extends StatelessWidget {
                       title: 'Book Now',
                       width: double.infinity,
                       onTap: () {
-                        Navigator.of(context).pushNamed(ChooseSeat.routeName);
+                        Navigator.of(context)
+                            .pushNamed(ChooseSeat.routeName, arguments: args);
                       },
                     ),
                   )

@@ -1,52 +1,72 @@
+import 'package:airplane_ticket/cubit/seat_cubit.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../shared/theme.dart';
 
 class SeatItem extends StatelessWidget {
-  int status;
+  String id;
+  bool isAvailable;
   SeatItem({
     super.key,
-    required this.status,
+    required this.id,
+    this.isAvailable = true,
   });
 
   @override
   Widget build(BuildContext context) {
-    Widget seatItem() {
-      var decoration;
-      if (status == 0) {
-        decoration = BoxDecoration(
-          border: Border.all(
-            width: 2,
-            color: colorPrimary,
-          ),
-          color: colorPrimary.withOpacity(0.3),
-          borderRadius: BorderRadius.circular(15),
-        );
-      } else if (status == 1) {
-        decoration = BoxDecoration(
-          color: colorPrimary,
-          borderRadius: BorderRadius.circular(15),
-        );
-      } else {
-        decoration = BoxDecoration(
-          color: colorUnavailable,
-          borderRadius: BorderRadius.circular(15),
-        );
-      }
+    bool isSelected = context.watch<SeatCubit>().isSelected(id);
 
-      return Container(
-          width: 48,
-          height: 48,
-          decoration: decoration,
-          child: status == 1
-              ? Center(
-                  child: Text(
-                    'YOU',
-                    style: whiteText.copyWith(
-                      fontWeight: fontWeightSemiBold,
+    Color background() {
+      if (!isAvailable) {
+        return colorUnavailable;
+      } else {
+        if (isSelected) {
+          return colorPrimary;
+        } else {
+          return colorPrimary.withOpacity(0.3);
+        }
+      }
+    }
+
+    Color borderColor() {
+      if (!isAvailable) {
+        return colorUnavailable;
+      } else {
+        return colorPrimary;
+      }
+    }
+
+    Widget seatItem() {
+      var decoration = BoxDecoration(
+        border: Border.all(
+          width: 2,
+          color: borderColor(),
+        ),
+        color: background(),
+        borderRadius: BorderRadius.circular(15),
+      );
+
+      return GestureDetector(
+        onTap: () {
+          if (isAvailable) {
+            context.read<SeatCubit>().addSeat(id);
+          }
+        },
+        child: Container(
+            width: 48,
+            height: 48,
+            decoration: decoration,
+            child: isAvailable && isSelected
+                ? Center(
+                    child: Text(
+                      'YOU',
+                      style: whiteText.copyWith(
+                        fontWeight: fontWeightSemiBold,
+                      ),
                     ),
-                  ),
-                )
-              : null);
+                  )
+                : null),
+      );
     }
 
     return seatItem();
