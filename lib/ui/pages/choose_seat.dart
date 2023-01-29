@@ -1,5 +1,6 @@
 import 'package:airplane_ticket/cubit/seat_cubit.dart';
 import 'package:airplane_ticket/model/destination_model.dart';
+import 'package:airplane_ticket/model/transaction_model.dart';
 import 'package:airplane_ticket/shared/theme.dart';
 import 'package:airplane_ticket/ui/pages/check_out_page.dart';
 import 'package:airplane_ticket/ui/widget/button_primary.dart';
@@ -17,6 +18,9 @@ class ChooseSeat extends StatelessWidget {
   Widget build(BuildContext context) {
     final destination =
         ModalRoute.of(context)!.settings.arguments as Destination;
+    List<String>? selectedSeatData;
+    int? grandTotal;
+
     Widget title() {
       return Container(
         margin: const EdgeInsets.only(top: 30),
@@ -104,6 +108,8 @@ class ChooseSeat extends StatelessWidget {
     Widget selectedSeat() {
       return BlocBuilder<SeatCubit, List<String>>(
         builder: (context, state) {
+          selectedSeatData = state;
+          grandTotal = state.length * (destination.price ?? 0);
           return Container(
             padding: const EdgeInsets.symmetric(
               horizontal: 24,
@@ -400,8 +406,30 @@ class ChooseSeat extends StatelessWidget {
             ButtonPrimary(
               title: 'Continue To Checkout',
               width: double.infinity,
-              onTap: () =>
-                  Navigator.of(context).pushNamed(CheckOutPage.routeName),
+              onTap: () => {
+                if (grandTotal != null &&
+                    selectedSeatData != null &&
+                    selectedSeatData!.isNotEmpty)
+                  {
+                    Navigator.of(context).pushNamed(
+                      CheckOutPage.routeName,
+                      arguments: TransactionModel(
+                        destination: destination,
+                        selectedSeats: (selectedSeatData ?? ['']).join(', '),
+                        grandTotal: grandTotal ?? 0,
+                      ),
+                    )
+                  }
+                else
+                  {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: const Text('Please Select the seat!'),
+                        backgroundColor: colorRed,
+                      ),
+                    )
+                  }
+              },
             ),
           ],
         ),

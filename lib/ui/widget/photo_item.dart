@@ -4,11 +4,16 @@ import '../../shared/theme.dart';
 
 class PhotoItem extends StatelessWidget {
   final String imgUrl;
+  final bool? imgUrlInternet;
 
-  PhotoItem({super.key, required this.imgUrl});
+  PhotoItem({super.key, required this.imgUrl, this.imgUrlInternet});
 
   @override
   Widget build(BuildContext context) {
+    ImageProvider? imageProvider =
+        (imgUrlInternet != null && imgUrlInternet == true
+            ? NetworkImage(imgUrl)
+            : AssetImage(imgUrl)) as ImageProvider<Object>?;
     return Container(
       width: 70,
       height: 70,
@@ -16,7 +21,7 @@ class PhotoItem extends StatelessWidget {
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(defaultRadius),
         image: DecorationImage(
-          image: AssetImage(imgUrl),
+          image: imageProvider ?? AssetImage(imgUrl),
           fit: BoxFit.cover,
         ),
       ),

@@ -25,4 +25,8 @@ class SeatCubit extends Cubit<List<String>> {
       return true;
     }
   }
+
+  void clearSeatSelection() {
+    state.clear();
+  }
 }
