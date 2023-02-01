@@ -25,8 +25,8 @@ class Destination extends Equatable {
       name: json['name'],
       address: json['address'],
       imageUrl: json['imageUrl'],
-      rating: double.parse(json['rating']),
-      price: int.parse(json['price']),
+      rating: json['rating'],
+      price: json['price'],
       description: json['description'],
     );
   }

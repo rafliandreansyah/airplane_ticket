@@ -1,3 +1,4 @@
+import 'package:airplane_ticket/model/destination_model.dart';
 import 'package:airplane_ticket/model/transaction_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
@@ -17,6 +18,38 @@ class TransactionService {
       });
     } catch (e) {
       throw e;
+    }
+  }
+
+  Future<List<TransactionModel>> fetchTransactions() async {
+    try {
+      List<TransactionModel> resultTransactions = [];
+      await _db
+          .collection('transactions')
+          .get()
+          .then((QuerySnapshot querySnapshot) {
+        querySnapshot.docs.forEach((transaction) {
+          final dynamic transactionData = transaction.data();
+          print('\n\n Data: ${transactionData.toString()}');
+          TransactionModel transactionModel =
+              TransactionModel.fromJson(transaction.id, {
+            'destination': transactionData['destination'],
+            'selectedSeats': transactionData['selectedSeats'],
+            'insurance': transactionData['insurance'],
+            'refundable': transactionData['refundable'],
+            'vat': transactionData['vat'],
+            'price': transactionData['price'],
+            'grandTotal': transactionData['grandTotal'],
+          });
+
+          resultTransactions.add(transactionModel);
+        });
+      });
+
+      return resultTransactions;
+    } catch (e, s) {
+      print(s);
+      rethrow;
     }
   }
 }

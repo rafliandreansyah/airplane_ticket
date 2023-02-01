@@ -21,9 +21,9 @@ class DestinationService {
               'name': doc['name'],
               'address': doc['address'],
               'imageUrl': doc['imageUrl'],
-              'rating': doc['rating'].toString(),
+              'rating': doc['rating'].toDouble(),
               'description': doc['description'],
-              'price': doc['price'].toString(),
+              'price': doc['price'],
             },
           );
 
@@ -31,8 +31,9 @@ class DestinationService {
         });
       });
       return results;
-    } catch (e) {
-      print("ini error");
+    } catch (e, s) {
+      print("ini error: $s");
+      print(e.toString());
       rethrow;
     }
   }

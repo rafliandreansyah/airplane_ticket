@@ -1,3 +1,4 @@
+import 'package:airplane_ticket/cubit/page_cubit.dart';
 import 'package:airplane_ticket/cubit/seat_cubit.dart';
 import 'package:airplane_ticket/cubit/transaction_cubit.dart';
 import 'package:airplane_ticket/model/transaction_model.dart';
@@ -6,6 +7,7 @@ import 'package:airplane_ticket/ui/pages/success.page.dart';
 import 'package:airplane_ticket/ui/widget/booking_detail_item.dart';
 import 'package:airplane_ticket/ui/widget/button_primary.dart';
 import 'package:airplane_ticket/ui/widget/photo_item.dart';
+import 'package:airplane_ticket/ui/widget/transaction_item.dart';
 import 'package:airplane_ticket/utils/number_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -81,132 +83,6 @@ class CheckOutPage extends StatelessWidget {
             ],
           )
         ],
-      );
-    }
-
-    Widget infoCheckOutCard() {
-      return Container(
-        margin: EdgeInsets.symmetric(
-          vertical: 30,
-        ),
-        padding: EdgeInsets.symmetric(
-          horizontal: 20,
-          vertical: 30,
-        ),
-        decoration: BoxDecoration(
-          color: colorWhite,
-          borderRadius: BorderRadius.circular(defaultRadius),
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              children: [
-                PhotoItem(
-                  imgUrl: transaction.destination.imageUrl ??
-                      'assets/images/img_danau_beratan.png',
-                  imgUrlInternet:
-                      transaction.destination.imageUrl != null ? true : false,
-                ),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        transaction.destination.name ?? '-',
-                        style: blackText.copyWith(
-                          fontSize: 18,
-                          fontWeight: fontWeightMedium,
-                        ),
-                      ),
-                      Text(
-                        transaction.destination.address ?? '-',
-                        style: greyText.copyWith(
-                          fontWeight: fontWeightLight,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                Rating(
-                  rating: transaction.destination.rating ?? 0,
-                ),
-              ],
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-            Text(
-              'Booking Detail',
-              style: blackText.copyWith(
-                fontSize: 16,
-                fontWeight: fontWeightSemiBold,
-              ),
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            // Total Person
-            BookingDetailItem(
-              titleDetail: 'Traveler',
-              infoDetail: '${seats.length} person',
-            ),
-            const SizedBox(
-              height: 16,
-            ),
-            // Info Seat
-            BookingDetailItem(
-              titleDetail: 'Seat',
-              infoDetail: transaction.selectedSeats,
-            ),
-            const SizedBox(
-              height: 16,
-            ),
-            // Status insurance
-            BookingDetailItem(
-              titleDetail: 'Insurance',
-              infoDetail: transaction.insurance ? 'YES' : 'NO',
-              color: colorGreen,
-            ),
-            const SizedBox(
-              height: 16,
-            ),
-            // Refundable
-            BookingDetailItem(
-              titleDetail: 'Refundable',
-              infoDetail: transaction.refundable ? 'YES' : 'NO',
-              color: colorRed,
-            ),
-            const SizedBox(
-              height: 16,
-            ),
-            // VAT
-            BookingDetailItem(
-              titleDetail: 'VAT',
-              infoDetail:
-                  NumberFormat.percentPattern('ID').format(transaction.vat),
-            ),
-            const SizedBox(
-              height: 16,
-            ),
-            // Price
-            BookingDetailItem(
-              titleDetail: 'Price',
-              infoDetail: NumberUtils.currencyFormat(transaction.grandTotal),
-            ),
-            const SizedBox(
-              height: 16,
-            ),
-            // Grand Total
-            BookingDetailItem(
-              titleDetail: 'Grand Total',
-              infoDetail: NumberUtils.currencyFormat((transaction.grandTotal +
-                      (transaction.grandTotal * transaction.vat))
-                  .toInt()),
-              color: colorPrimary,
-            ),
-          ],
-        ),
       );
     }
 
@@ -364,14 +240,17 @@ class CheckOutPage extends StatelessWidget {
               ),
               children: [
                 destinationFromTo(),
-                infoCheckOutCard(),
+                TransactionItem(transaction),
                 paymentDetail(),
                 ButtonPrimary(
                   title: 'Pay Now',
                   width: double.infinity,
-                  onTap: () => context
-                      .read<TransactionCubit>()
-                      .createTransaction(transaction),
+                  onTap: () {
+                    context.read<PageCubit>().changePage(1);
+                    context
+                        .read<TransactionCubit>()
+                        .createTransaction(transaction);
+                  },
                 ),
                 const SizedBox(
                   height: 30,
